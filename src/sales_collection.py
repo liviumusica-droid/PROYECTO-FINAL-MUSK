@@ -1,7 +1,7 @@
 from src.sale import Sale
 
 
-class salesCollection:
+class SalesCollection:
     def __init__(self, sales_list: list[Sale]):
         self.sales = sales_list
 

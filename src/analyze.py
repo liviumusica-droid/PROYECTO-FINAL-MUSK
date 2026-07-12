@@ -3,10 +3,10 @@ import pandas as pd
 from src.client import Client
 from src.sale import Sale
 from src.client_collection import ClientCollection
-from src.sales_collection import salesCollection
+from src.sales_collection import SalesCollection
 from src.functional_utils import filter_sales_by_category
 
-def main():
+def generate_report():
     with open("data/clients.json", "r", encoding="utf-8") as f:
         clients_data = json.load(f)
 
@@ -19,10 +19,10 @@ def main():
     sales_list = []
     for _, row in df_sales.iterrows():
         sales_list.append(Sale(row["sale_id"], row["client_id"], row["product"], row["category"], row["amount"], row["date"]))
-    sales_col = salesCollection(sales_list)
+    sales_col = SalesCollection(sales_list)
 
     df_merged = pd.merge(df_sales, df_clients, on="client_id", how="inner")
-    
+
     total_clients = len(client_col.clients)
     total_sales = len(df_sales)
     total_revenue = float(df_sales["amount"].sum())
@@ -88,6 +88,11 @@ def main():
         "high_spending_clients": high_spending_clients,
         "monthly_sales": monthly_sales
     }
+
+    return report
+
+def main():
+    report = generate_report()
 
     # Guardar el informe en un archivo JSON
     with open("data/report.json", "w", encoding="utf-8") as f:
