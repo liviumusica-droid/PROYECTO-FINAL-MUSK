@@ -56,17 +56,15 @@ def generate_report():
     #cliente con gasto minimo > 500
 
     gasto_minimo = 500
+    
     high_spending_clients = []
     for client in client_col.clients:
         total_spent = sales_col.total_amount_by_client(client.client_id)
         if total_spent > gasto_minimo:
-            high_spending_clients.append({
-                "client_id": client.client_id,
-                "name": client.name,
-                "total_spent": total_spent
-            })
+            high_spending_clients.append(client.name)
+
     #Ventas acumuladas mes a mes
-    
+
     df_sales_copy = df_sales.copy()
     df_sales_copy["date"] = pd.to_datetime(df_sales_copy["date"])
     df_sales_copy["month"] = df_sales_copy["date"].dt.to_period("M")
