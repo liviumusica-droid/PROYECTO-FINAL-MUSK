@@ -44,12 +44,12 @@ def generate_report():
         })
     
     countries =set(c.country for c in client_col.clients)
-    top_clients_by_country = {}
+    top_client_by_country = {}
     for country in countries:
         clients_in_country = client_col.clients_by_country(country)
         best_client = max(clients_in_country, key=lambda c: sales_col.total_amount_by_client(c.client_id), default=None)
         if best_client:
-            top_clients_by_country[country] = {
+            top_client_by_country[country] = {
                 "client_id": best_client.client_id,
                 "name": best_client.name,
                 "total_spent": sales_col.total_amount_by_client(best_client.client_id)
@@ -83,7 +83,7 @@ def generate_report():
             "total_revenue": total_revenue
         },
         "clients": clients_report,
-        "top_clients_by_country": top_clients_by_country,
+        "top_client_by_country": top_client_by_country,
         "sales_by_category": sales_by_category,
         "high_spending_clients": high_spending_clients,
         "monthly_sales": monthly_sales
