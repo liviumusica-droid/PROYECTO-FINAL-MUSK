@@ -49,15 +49,12 @@ def generate_report():
         clients_in_country = client_col.clients_by_country(country)
         best_client = max(clients_in_country, key=lambda c: sales_col.total_amount_by_client(c.client_id), default=None)
         if best_client:
-            top_client_by_country[country] = {
-                "client_id": best_client.client_id,
-                "name": best_client.name,
-                "total_spent": sales_col.total_amount_by_client(best_client.client_id)
-            }
+            top_client_by_country[country] = best_client.name
 
     sales_by_category =df_sales.groupby("category")["amount"].sum().to_dict()
 
     #cliente con gasto minimo > 500
+
     gasto_minimo = 500
     high_spending_clients = []
     for client in client_col.clients:
@@ -69,6 +66,7 @@ def generate_report():
                 "total_spent": total_spent
             })
     #Ventas acumuladas mes a mes
+    
     df_sales_copy = df_sales.copy()
     df_sales_copy["date"] = pd.to_datetime(df_sales_copy["date"])
     df_sales_copy["month"] = df_sales_copy["date"].dt.to_period("M")
