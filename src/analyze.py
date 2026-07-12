@@ -22,6 +22,7 @@ def main():
     sales_col = salesCollection(sales_list)
 
     df_merged = pd.merge(df_sales, df_clients, on="client_id", how="inner")
+    
     total_clients = len(client_col.clients)
     total_sales = len(df_sales)
     total_revenue = float(df_sales["amount"].sum())
