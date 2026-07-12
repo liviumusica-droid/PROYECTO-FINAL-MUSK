@@ -13,6 +13,7 @@ class salesCollection:
 
     def total_amount_by_category(self, category: str) -> float:
         return sum(sale.amount for sale in self.sales if sale.category.lower() == category.lower())
+    
 
     def average_sale_by_client(self, client_id: int) -> float:
         client_sales = self.sales_by_client(client_id)
