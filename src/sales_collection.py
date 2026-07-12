@@ -19,5 +19,5 @@ class SalesCollection:
         client_sales = self.sales_by_client(client_id)
         if not client_sales:
             return 0.0
-        return self.total_amount_by_client(client_id) / len(client_sales)
+        return round(self.total_amount_by_client(client_id) / len(client_sales), 2)
         
